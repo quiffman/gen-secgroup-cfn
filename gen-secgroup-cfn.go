@@ -1,14 +1,9 @@
-package main
+package cfn
 
 import (
-	"encoding/json"
-	"flag"
 	"fmt"
-	"log"
-	"os"
 
 	. "github.com/awslabs/aws-cfn-go-template"
-	"github.com/sethvargo/go-fastly"
 )
 
 type SecurityGroupIngress struct {
@@ -18,33 +13,6 @@ type SecurityGroupIngress struct {
 	IpProtocol            string      `json:",omitempty"`
 	FromPort              string      `json:",omitempty"`
 	ToPort                string      `json:",omitempty"`
-}
-
-func main() {
-	var name, protocol, port string
-	flag.StringVar(&name, "name", "", "Name to use for this auto-generated security group.")
-	flag.StringVar(&protocol, "protocol", "tcp", "The IP protocol name (tcp, udp, icmp) or number that these rules should apply to.")
-	flag.StringVar(&port, "port", "80", "The port number or port range to allow.")
-	flag.Parse()
-
-	client, err := fastly.NewClient("")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	ips, err := client.IPs()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	t, err := GenTemplate(ips, name, protocol, port)
-
-	//b, err := json.MarshalIndent(t, "", "  ")
-	b, err := json.Marshal(t)
-	if err != nil {
-		fmt.Println("error:", err)
-	}
-	os.Stdout.Write(b)
 }
 
 func GenTemplate(ips []string, name string, protocol string, port string) (Template, error) {
