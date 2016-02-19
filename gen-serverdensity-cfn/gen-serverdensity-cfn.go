@@ -34,8 +34,9 @@ func check(err error) {
 }
 
 func main() {
-	var name, protocol, port string
+	var name, vpcId, protocol, port string
 	flag.StringVar(&name, "name", "ServerDensity", "Name to use for this auto-generated security group.")
+	flag.StringVar(&vpcId, "vpc", "", "The VPC ID to place this auto-generated security group in.")
 	flag.StringVar(&protocol, "protocol", "tcp", "The IP protocol name (tcp, udp, icmp) or number that these rules should apply to.")
 	flag.StringVar(&port, "port", "80", "The port number or port range to allow.")
 	flag.Parse()
@@ -43,7 +44,7 @@ func main() {
 	ips, err := scrapePage("https://support.serverdensity.com/hc/en-us/articles/201091476-Monitoring-node-locations-and-IP-addresses")
 	check(err)
 
-	t, err := cfn.GenTemplate(ips, name, protocol, port)
+	t, err := cfn.GenTemplate(ips, name, vpcId, protocol, port)
 	check(err)
 
 	//b, err := json.MarshalIndent(t, "", "  ")

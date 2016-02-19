@@ -33,9 +33,10 @@ func check(err error) {
 }
 
 func main() {
-	var apiKey, name, protocol, port string
+	var apiKey, name, vpcId, protocol, port string
 	flag.StringVar(&apiKey, "api-key", "", "API Key with permissions to query the service.")
 	flag.StringVar(&name, "name", "Webmon", "Name to use for this auto-generated security group.")
+	flag.StringVar(&vpcId, "vpc", "", "The VPC ID to place this auto-generated security group in.")
 	flag.StringVar(&protocol, "protocol", "tcp", "The IP protocol name (tcp, udp, icmp) or number that these rules should apply to.")
 	flag.StringVar(&port, "port", "80", "The port number or port range to allow.")
 	flag.Parse()
@@ -51,7 +52,7 @@ func main() {
 		}
 	}
 
-	t, err := cfn.GenTemplate(ips, name, protocol, port)
+	t, err := cfn.GenTemplate(ips, name, vpcId, protocol, port)
 	check(err)
 
 	//b, err := json.MarshalIndent(t, "", "  ")

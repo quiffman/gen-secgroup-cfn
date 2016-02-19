@@ -15,7 +15,7 @@ type SecurityGroupIngress struct {
 	ToPort                string      `json:",omitempty"`
 }
 
-func GenTemplate(ips []string, name string, protocol string, port string) (Template, error) {
+func GenTemplate(ips []string, name string, vpcId string, protocol string, port string) (Template, error) {
 	var s []SecurityGroupIngress
 
 	for _, i := range ips {
@@ -29,6 +29,11 @@ func GenTemplate(ips []string, name string, protocol string, port string) (Templ
 
 	var p = make(map[string]interface{})
 	p["GroupDescription"] = fmt.Sprintf("allow %s/%s connections from specified %s CIDR ranges", protocol, port, name)
+
+	if vpcId != "" {
+		p["VpcId"] = vpcId
+	}
+
 	p["SecurityGroupIngress"] = s
 
 	t := Template{

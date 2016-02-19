@@ -12,8 +12,9 @@ import (
 )
 
 func main() {
-	var name, protocol, port string
+	var name, vpcId, protocol, port string
 	flag.StringVar(&name, "name", "Fastly", "Name to use for this auto-generated security group.")
+	flag.StringVar(&vpcId, "vpc", "", "The VPC ID to place this auto-generated security group in.")
 	flag.StringVar(&protocol, "protocol", "tcp", "The IP protocol name (tcp, udp, icmp) or number that these rules should apply to.")
 	flag.StringVar(&port, "port", "80", "The port number or port range to allow.")
 	flag.Parse()
@@ -28,7 +29,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	t, err := cfn.GenTemplate(ips, name, protocol, port)
+	t, err := cfn.GenTemplate(ips, name, vpcId, protocol, port)
 
 	//b, err := json.MarshalIndent(t, "", "  ")
 	b, err := json.Marshal(t)
