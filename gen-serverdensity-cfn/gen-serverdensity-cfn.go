@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net"
 	"net/http"
 	"net/url"
 	"os"
@@ -83,7 +84,10 @@ func scrapePage(url string) ([]string, error) {
 					if a.Key == "class" && a.Val == "ip" {
 						z.Next()
 
-						ips = append(ips, z.Token().Data)
+						i := z.Token().Data
+						if net.ParseIP(i) != nil {
+							ips = append(ips, fmt.Sprintf("%s/32", z.Token().Data))
+						}
 					}
 				}
 			}

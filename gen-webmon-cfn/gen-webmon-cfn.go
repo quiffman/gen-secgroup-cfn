@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net"
 	"net/http"
 	"net/url"
 	"os"
@@ -45,7 +46,9 @@ func main() {
 
 	var ips []string
 	for _, i := range list {
-		ips = append(ips, i.IpAddress)
+		if net.ParseIP(i.IpAddress) != nil {
+			ips = append(ips, fmt.Sprintf("%s/32", i.IpAddress))
+		}
 	}
 
 	t, err := cfn.GenTemplate(ips, name, protocol, port)
