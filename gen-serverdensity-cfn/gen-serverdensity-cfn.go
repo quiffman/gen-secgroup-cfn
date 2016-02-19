@@ -87,7 +87,7 @@ func scrapePage(url string) ([]string, error) {
 
 						i := z.Token().Data
 						if net.ParseIP(i) != nil {
-							ips = append(ips, fmt.Sprintf("%s/32", z.Token().Data))
+							ips = append(ips, fmt.Sprintf("%s/32", i))
 						}
 					}
 				}
