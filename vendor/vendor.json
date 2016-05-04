@@ -1,0 +1,19 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "QPHIR4GAfmNXMWwNDXrZsLd7sws=",
+			"path": "github.com/awslabs/aws-cfn-go-template",
+			"revision": "0310c0cb58cc34735697b444cd50715d6fbeab43",
+			"revisionTime": "2015-11-18T21:33:54-08:00"
+		},
+		{
+			"checksumSHA1": "+O9yx8+pmuYWsXcANgboBxf05R8=",
+			"path": "github.com/sethvargo/go-fastly",
+			"revision": "6566b161e807516f4a45bc3054eac291a120e217",
+			"revisionTime": "2016-04-27T17:53:27+02:00"
+		}
+	],
+	"rootPath": "github.com/quiffman/gen-secgroup-cfn"
+}
